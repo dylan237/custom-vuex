@@ -1,23 +1,27 @@
 <template>
   <div id="app">
-    {{ $store.state.age }}
+    age: {{ $store.state.age }} <br>
+    getAge: {{ $store.getters.getAge }} <br>
+    <button @click="increase">increase</button>
+    <button @click="minus">minus</button>
+    <button @click="asyncIncrease">asyncIncrease</button>
   </div>
 </template>
 
 <script>
 export default {
   name: 'App',
-  components: {}
+  components: {},
+  methods: {
+    increase () {
+      this.$store.commit('increase', 1)
+    },
+    minus () {
+      this.$store.commit('minus', 1)
+    },
+    asyncIncrease () {
+      this.$store.dispatch('asyncIncrease', 2)
+    }
+  }
 }
 </script>
-
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
-</style>
