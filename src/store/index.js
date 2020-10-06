@@ -1,5 +1,6 @@
 import Vue from 'vue'
-import Vuex from '../vuex'
+import Vuex from 'vuex'
+// import Vuex from '../vuex'
 Vue.use(Vuex)
 
 export default new Vuex.Store({
@@ -8,6 +9,7 @@ export default new Vuex.Store({
   },
   getters: {
     getAge (state) {
+      // console.log('getAge---')
       return state.age
     }
   },

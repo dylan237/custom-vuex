@@ -2,6 +2,8 @@
   <div id="app">
     age: {{ $store.state.age }} <br>
     getAge: {{ $store.getters.getAge }} <br>
+    <!-- getAge: {{ $store.getters.getAge }} <br>
+    getAge: {{ $store.getters.getAge }} <br> -->
     <!-- <button @click="increase">increase</button>
     <button @click="minus">minus</button>
     <button @click="asyncIncrease">asyncIncrease</button> -->

@@ -1,34 +1,36 @@
 class Store {
   constructor (options) {
-    console.log('options: ', options)
+    // console.log('options: ', options)
     const { state = {}, getters = {} } = options
-    this._vm = new Vue({
-      data: {
-        // $開頭的資料 Vue 預設不會掛到 _vm 上，但可以在 vm._data 內找到
-        $state: state
-      }
-    })
+    const computed = {}
+
     this.getters = {}
-    Object.keys(getters).forEach(getterName => {
+    Object.keys(getters).forEach(getterName => { 
+      computed[getterName] = () => {
+        return getters[getterName](this.state)
+      }
       Object.defineProperty(this.getters, getterName, {
         get: () => {
-          return getters[getterName](this.state)
+          return this._vm[getterName]
         },
         // value: getters[getterName](this.state),
         // writable: false,
         enumerable: false,
         configurable: false
-        // set: () => {
-
-        // }
       })
     })
-    console.log('this: ', this)
+    this._vm = new Vue({
+      data: {
+        // $開頭的資料 Vue 預設不會掛到 _vm 上，但可以在 vm._data 內找到
+        $$state: state
+      },
+      computed
+    })
+    // console.log('this: ', this)
   }
 
   get state () {
-    console.log('function state was invoked')
-    return this._vm._data.$state
+    return this._vm._data.$$state
   }
 }
 
@@ -38,7 +40,7 @@ const install = (_Vue) => {
   Vue = _Vue
   Vue.mixin({
     beforeCreate () {
-      console.log('this.$option---', this.$options)
+      // console.log('this.$option---', this.$options)
       if (this.$options && this.$options.store) {
         // root (App component)
         this.$store = this.$options.store
