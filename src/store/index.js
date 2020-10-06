@@ -1,11 +1,15 @@
 import Vue from 'vue'
 import Vuex from '../vuex'
-
 Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
     age: 10
+  },
+  getters: {
+    getAge (state) {
+      return state.age
+    }
   },
   mutations: {
     increase (state, payload) {
@@ -20,11 +24,6 @@ export default new Vuex.Store({
       setTimeout(() => {
         commit('increase', payload)
       }, 1000)
-    }
-  },
-  getters: {
-    getAge (state) {
-      return state.age
     }
   },
   modules: {}
