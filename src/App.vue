@@ -1,7 +1,7 @@
 <template>
   <div id="app">
-    age: {{ $store.state.age }} <br>
-    getAge: {{ $store.getters.getAge }} <br>
+    <!-- age: {{ $store.state.age }} <br>
+    getAge: {{ $store.getters.getAge }} <br> -->
     <!-- getAge: {{ $store.getters.getAge }} <br>
     getAge: {{ $store.getters.getAge }} <br> -->
     <button @click="increase">increase</button>

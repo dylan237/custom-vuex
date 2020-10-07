@@ -1,17 +1,10 @@
-import Vue from 'vue'
-// import Vuex from 'vuex'
-import Vuex from '@/vuex'
-import a from '@/store/a-module'
-import b from '@/store/b-module'
-Vue.use(Vuex)
-
-export default new Vuex.Store({
+export default {
+  namespaced: true,
   state: {
     age: 10
   },
   getters: {
     getAge (state) {
-      // console.log('getAge---')
       return state.age
     }
   },
@@ -29,9 +22,5 @@ export default new Vuex.Store({
         commit('increase', payload)
       }, 1000)
     }
-  },
-  modules: {
-    a,
-    b
   }
-})
+}
