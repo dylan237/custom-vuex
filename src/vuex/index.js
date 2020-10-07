@@ -1,17 +1,23 @@
+import { forEachValue } from '@/utils'
 class Store {
   constructor (options) {
     // console.log('options: ', options)
-    const { state = {}, getters = {} } = options
+    const {
+      state = {},
+      getters = {},
+      mutations = {},
+      actions = {}
+    } = options
     const computed = {}
 
     this.getters = {}
-    Object.keys(getters).forEach(getterName => { 
-      computed[getterName] = () => {
-        return getters[getterName](this.state)
+    forEachValue(getters, (fn, key) => {
+      computed[key] = () => {
+        return fn(this.state)
       }
-      Object.defineProperty(this.getters, getterName, {
+      Object.defineProperty(this.getters, key, {
         get: () => {
-          return this._vm[getterName]
+          return this._vm[key]
         },
         // value: getters[getterName](this.state),
         // writable: false,
@@ -26,7 +32,23 @@ class Store {
       },
       computed
     })
-    // console.log('this: ', this)
+    this.mutations = {}
+    this.actions = {}
+    forEachValue(mutations, (fn, key) => {
+      this.mutations[key] = (payload) => fn(this.state, payload)
+    })
+    forEachValue(actions, (fn, key) => {
+      this.actions[key] = (payload) => fn(this, payload)
+    })
+  }
+
+  // 使用箭頭函式是為了 this 可以指向 store 實例
+  commit = (type, payload) => {
+    this.mutations[type](payload)
+  }
+
+  dispatch = (type, payload) => {
+    this.actions[type](payload)
   }
 
   get state () {
